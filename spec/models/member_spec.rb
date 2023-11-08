@@ -5,7 +5,6 @@ RSpec.describe Member, type: :model do
   it { should have_many(:reservations) }
 
   describe 'validations' do
-
     subject { create :member }
     it { should validate_uniqueness_of(:user_id) }
   end
