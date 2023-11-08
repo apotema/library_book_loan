@@ -13,7 +13,7 @@
 <div id="books">
   <% @books.each do |book| %>
     <%= render book %>
-    <% unless book.can_be_reserved? %>
+    <% if book.can_be_reserved? %>
       <p>
         <%= form_with(url: book_reservations_path(book), method: :post, local: true) do |form| %>
           <div>

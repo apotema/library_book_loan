@@ -2,7 +2,7 @@ class Book < ApplicationRecord
   has_many :reservations, dependent: :destroy
 
   def can_be_reserved?
-    reservations.where(status: %w[reserved lent]).any?
+    reservations.open.none?
   end
 
   def reserved_by?(member)

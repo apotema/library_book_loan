@@ -5,19 +5,42 @@ RSpec.describe Book, type: :model do
   let(:member) { create(:member) }
 
   describe '#can_be_reserved?' do
-    context 'when the book is already reserved or lent' do
-      before do
-        create(:reservation, book:, status: 'reserved')
-      end
+    let(:book) { create(:book) }
 
+    context 'when there are no open reservations' do
       it 'returns true' do
-        expect(book.can_be_reserved?).to be true
+        expect(book.can_be_reserved?).to eq(true)
       end
     end
 
-    context 'when the book is not reserved or lent' do
+    context 'when there are open reservations' do
+      before do
+        create(:reservation, book:, status: :reserved)
+      end
+
       it 'returns false' do
-        expect(book.can_be_reserved?).to be false
+        expect(book.can_be_reserved?).to eq(false)
+      end
+    end
+
+    context 'when all reservations are closed' do
+      before do
+        create(:reservation, book:, status: :returned)
+      end
+
+      it 'returns true' do
+        expect(book.can_be_reserved?).to eq(true)
+      end
+    end
+
+    context 'when there are both open and closed reservations' do
+      before do
+        create(:reservation, book:, status: :returned)
+        create(:reservation, book:, status: :reserved)
+      end
+
+      it 'returns false' do
+        expect(book.can_be_reserved?).to eq(false)
       end
     end
   end

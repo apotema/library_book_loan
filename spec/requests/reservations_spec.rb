@@ -1,6 +1,109 @@
 require 'rails_helper'
 
 RSpec.describe 'Reservations', type: :request do
+  describe 'POST /returned' do
+    let(:user) { create(:user) }
+    let(:reservation) { create(:reservation) }
+
+    context 'when the user is authenticated' do
+      before do
+        sign_in user
+        post returned_reservation_path(reservation)
+      end
+
+      it 'updates the reservation status to returned' do
+        reservation.reload
+        expect(reservation.status).to eq('returned') # Assuming status is a string field
+      end
+
+      it 'redirects to the reservations path with a success notice' do
+        expect(response).to redirect_to(reservations_path)
+        expect(flash[:notice]).to match(/has been returned successfully/)
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      before do
+        post returned_reservation_path(reservation)
+      end
+
+      it 'does not update the reservation status' do
+        reservation.reload
+        expect(reservation.status).not_to eq('returned') # Assuming status is a string field
+      end
+
+      it 'redirects to the sign-in page' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'POST /lend' do
+    let(:user) { create(:user) }
+    let(:reservation) { create(:reservation) }
+
+    context 'when the user is authenticated' do
+      before do
+        sign_in user
+        post lend_reservation_path(reservation)
+      end
+
+      it 'updates the reservation status to lent' do
+        reservation.reload
+        expect(reservation.status).to eq('lent')
+      end
+
+      it 'redirects to the reservations path with a success notice' do
+        expect(response).to redirect_to(reservations_path)
+        expect(flash[:notice]).to match(/has been lent successfully/)
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      before do
+        post lend_reservation_path(reservation)
+      end
+
+      it 'does not update the reservation status' do
+        reservation.reload
+        expect(reservation.status).not_to eq('lent')
+      end
+
+      it 'redirects to the sign-in page' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe 'GET /index' do
+    let(:user) { create(:user) }
+
+    context 'when the user is authenticated' do
+      before do
+        sign_in user
+        get reservations_path
+      end
+
+      it 'has a successful status' do
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      before do
+        get reservations_path
+      end
+
+      it 'redirects to the sign-in page' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'has a redirect http status' do
+        expect(response).to have_http_status(:found)
+      end
+    end
+  end
+
   describe 'POST /create' do
     let(:user) { create(:user) }
     let(:book) { create(:book) }
