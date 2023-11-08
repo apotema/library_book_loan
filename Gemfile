@@ -14,9 +14,6 @@ gem 'pg', '~> 1.2'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
-
 gem 'rubocop', '~> 1.57.2', require: false
 gem 'rubocop-rails', '~> 2.11.0', require: false
 gem 'rubocop-rspec', '~> 2.2.0', require: false

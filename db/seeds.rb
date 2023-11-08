@@ -12,4 +12,8 @@ Book.create(name: 'The Great Gatsby', author: 'F. Scott Fitzgerald')
 Book.create(name: 'Bla', author: 'Ble')
 Book.create(name: 'Foo', author: 'Bar')
 
-User.create(email: 'foo@bar.com', password: 'foobar')
+user = User.create(email: 'foo@bar.com', password: 'foobar', role: 'clerk')
+user2 = User.create(email: 'user@user.com', password: 'userpassword')
+
+Member.create(user:)
+Member.create(user: user2)
