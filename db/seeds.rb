@@ -8,9 +8,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Book.create(name: 'The Great Gatsby', author: 'F. Scott Fitzgerald')
-Book.create(name: 'Bla', author: 'Ble')
-Book.create(name: 'Foo', author: 'Bar')
+Book.create(title: 'The Great Gatsby', author: 'F. Scott Fitzgerald')
+Book.create(title: 'Bla', author: 'Ble')
+Book.create(title: 'Foo', author: 'Bar')
 
 user = User.create(email: 'foo@bar.com', password: 'foobar', role: 'clerk')
 user2 = User.create(email: 'user@user.com', password: 'userpassword')
