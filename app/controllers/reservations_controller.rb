@@ -3,7 +3,7 @@ class ReservationsController < ApplicationController
 
   before_action :reservation, only: %i[lend returned]
   before_action :check_existing_reservation, only: [:create]
-  before_action :check_clerk
+  before_action :check_clerk, except: %i[create]
 
   def index
     @reservations = Reservation.all
@@ -40,7 +40,7 @@ class ReservationsController < ApplicationController
   end
 
   def check_clerk
-    return if current_user.role&.include?('clerk')
+    return if current_user.clerk?
 
     redirect_to :books, alert: 'You are not a clerk.'
   end

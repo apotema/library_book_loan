@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :member, dependent: :destroy
+
+  def clerk?
+    role&.include?('clerk')
+  end
 end
