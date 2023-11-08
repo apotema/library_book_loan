@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :books, only: %i[index] do
     resource :reservations, only: %i[create]
   end
-  resources :members
   devise_for :users
 
   root to: 'home#index'
