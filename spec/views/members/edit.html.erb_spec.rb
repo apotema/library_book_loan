@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "members/edit", type: :view do
   let(:member) {
-    Member.create!()
+    create(:member)
   }
 
   before(:each) do

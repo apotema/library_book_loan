@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "members/index", type: :view do
   before(:each) do
     assign(:members, [
-      Member.create!(),
-      Member.create!()
+      create(:member),
+      create(:member)
     ])
   end
 
