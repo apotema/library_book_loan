@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'books/edit', type: :view do
@@ -5,7 +7,7 @@ RSpec.describe 'books/edit', type: :view do
     Book.create!
   end
 
-  before(:each) do
+  before do
     assign(:book, book)
   end
 

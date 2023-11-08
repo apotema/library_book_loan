@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'members/edit', type: :view do
@@ -5,7 +7,7 @@ RSpec.describe 'members/edit', type: :view do
     create(:member)
   end
 
-  before(:each) do
+  before do
     assign(:member, member)
   end
 

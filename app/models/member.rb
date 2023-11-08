@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Member < ApplicationRecord
   belongs_to :user
   has_many :reservations
 
-  validates_uniqueness_of :user_id
+  validates :user_id, uniqueness: true
 end

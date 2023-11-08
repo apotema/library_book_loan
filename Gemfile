@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -13,7 +15,9 @@ gem 'sprockets-rails'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
 
-gem 'rubocop', '~> 1.18', require: false
+gem 'rubocop', '~> 1.57.2', require: false
+gem 'rubocop-rails', '~> 2.11.0', require: false
+gem 'rubocop-rspec', '~> 2.2.0', require: false
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
