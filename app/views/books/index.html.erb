@@ -27,6 +27,9 @@
       </p>
     <% else %>
       <p>This book is already reserved.</p>
+      <% if book.reserved_by?(current_user) %>
+        <p>Reservation ID: <%= book.reservations.reserved.last.id %></p>
+      <% end %>
     <% end %>
   <% end %>
 </div>
