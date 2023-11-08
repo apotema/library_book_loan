@@ -10,3 +10,23 @@ Style/FrozenStringLiteralComment:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  ExcludedMethods:
+    - describe
+    - context
+    - resource
+    - guard
+    - task
+    - register
+    - post
+    - put
+    - get
+    - delete
+    - namespace
+    - show
+    - attributes_table
+    - define
+    - factory
+    - trait
+    - draw

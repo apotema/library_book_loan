@@ -11,3 +11,5 @@
 Book.create(name: 'The Great Gatsby', author: 'F. Scott Fitzgerald')
 Book.create(name: 'Bla', author: 'Ble')
 Book.create(name: 'Foo', author: 'Bar')
+
+User.create(email: 'foo@bar.com', password: 'foobar')

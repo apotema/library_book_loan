@@ -1,5 +1,7 @@
-# frozen_string_literal: true
-
 class Book < ApplicationRecord
-  belongs_to :reservation, optional: true
+  has_many :reservations, dependent: :destroy
+
+  def can_be_reserved?
+    reservations.where(status: %w[reserved lent]).any?
+  end
 end
