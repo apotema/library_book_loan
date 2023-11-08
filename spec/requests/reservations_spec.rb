@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Reservations', type: :request do
-  describe 'POST /returned' do
-    let(:user) { create(:user) }
-    let(:reservation) { create(:reservation) }
+  let(:user) { create(:user, role: 'clerk') }
+  let(:reservation) { create(:reservation) }
 
+  describe 'POST /returned' do
     context 'when the user is authenticated' do
       before do
         sign_in user
@@ -39,9 +39,6 @@ RSpec.describe 'Reservations', type: :request do
   end
 
   describe 'POST /lend' do
-    let(:user) { create(:user) }
-    let(:reservation) { create(:reservation) }
-
     context 'when the user is authenticated' do
       before do
         sign_in user
@@ -76,8 +73,6 @@ RSpec.describe 'Reservations', type: :request do
   end
 
   describe 'GET /index' do
-    let(:user) { create(:user) }
-
     context 'when the user is authenticated' do
       before do
         sign_in user
@@ -105,7 +100,6 @@ RSpec.describe 'Reservations', type: :request do
   end
 
   describe 'POST /create' do
-    let(:user) { create(:user) }
     let(:book) { create(:book) }
     let!(:member) { create(:member, user:) }
     let(:reservation_params) { { reservation: { book_id: book.id } } }
