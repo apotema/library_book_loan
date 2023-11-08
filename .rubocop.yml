@@ -1,0 +1,32 @@
+AllCops:
+  SuggestExtensions: false
+
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  ExcludedMethods:
+    - describe
+    - context
+    - resource
+    - guard
+    - task
+    - register
+    - post
+    - put
+    - get
+    - delete
+    - namespace
+    - show
+    - attributes_table
+    - define
+    - factory
+    - trait
+    - draw

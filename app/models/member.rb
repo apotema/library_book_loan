@@ -1,6 +1,6 @@
 class Member < ApplicationRecord
   belongs_to :user
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
 
-  validates_uniqueness_of :user_id
+  validates :user_id, uniqueness: true
 end

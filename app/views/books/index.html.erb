@@ -1,0 +1,35 @@
+<%= form_with(url: books_path, method: :get, local: true) do %>
+  <div>
+    <%= label_tag(:query, "Search by title or author:") %>
+    <%= text_field_tag(:query, params[:query]) %>
+  </div>
+  <div>
+    <%= submit_tag("Search") %>
+  </div>
+<% end %>
+
+<h1>Books</h1>
+
+<div id="books">
+  <% @books.each do |book| %>
+    <%= render book %>
+    <% unless book.can_be_reserved? %>
+      <p>
+        <%= form_with(url: book_reservations_path(book), method: :post, local: true) do |form| %>
+          <div>
+            <%= form.label :pick_up_time, "Reservation Date and Time:" %>
+            <%= form.datetime_local_field :pick_up_time, min: Time.now.strftime('%Y-%m-%dT%H:%M') %>
+          </div>
+          <div>
+            <%= form.submit "Reserve this book" %>
+          </div>
+        <% end %>
+      </p>
+    <% else %>
+      <p>This book is already reserved.</p>
+      <% if book.reserved_by?(current_user) %>
+        <p>Reservation ID: <%= book.reservations.reserved.last.id %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
