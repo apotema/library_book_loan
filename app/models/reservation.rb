@@ -7,6 +7,10 @@ class Reservation < ApplicationRecord
 
   validate :book_is_available, on: :create
 
+  # Extra layer of protection to ensure that the reservation is not created
+  # if the book is already reserved at the same time.
+  around_save :around_create_reservation
+
   state_machine initial: :reserved do
     event :lend do
       transition reserved: :lent
@@ -24,5 +28,12 @@ class Reservation < ApplicationRecord
     return unless Reservation.open.exists?(book_id:)
 
     errors.add(:book, 'is already reserved.')
+  end
+
+  def around_create_reservation
+    Reservation.transaction do
+      yield
+      raise ActiveRecord::Rollback if errors.present?
+    end
   end
 end
