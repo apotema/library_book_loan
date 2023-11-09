@@ -52,6 +52,11 @@ rails server
 5. Visit in your web browser.
 ```bash
  http://localhost:3000
+
+ Possible Logins
+ foo@bar.com/foobar - role: Clerk
+ user@user.com/userpassword - role: Basic User
+
 ```
 
 Hosting
