@@ -78,10 +78,12 @@ end
 
 group :test do
   gem 'faker'
-
+  gem 'launchy'
   gem 'shoulda-matchers', '~> 5.0'
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
+
   gem 'selenium-webdriver'
+
   gem 'webdrivers'
 end
