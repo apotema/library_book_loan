@@ -107,7 +107,7 @@ RSpec.describe 'Reservations', type: :request do
   describe 'POST /create' do
     let(:book) { create(:book) }
     let!(:member) { create(:member, user:) }
-    let(:reservation_params) { { reservation: { book_id: book.id } } }
+    let(:reservation_params) { { book_id: book.id, pick_up_time: 1.day.from_now.strftime('%Y-%m-%dT%H:%M') } }
 
     context 'when the user is authenticated' do
       before do
