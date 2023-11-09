@@ -1,37 +1,46 @@
-<%= form_with(url: books_path, method: :get, local: true) do %>
-  <div>
-    <%= label_tag(:query, "Search by title or author:") %>
-    <%= text_field_tag(:query, params[:query]) %>
-  </div>
-  <div>
-    <%= submit_tag("Search") %>
-  </div>
-<% end %>
-
-<h1>Books</h1>
-
-<div id="books">
-  <% @books.each do |book| %>
-    <%= render book %>
-    <% if book.can_be_reserved? %>
-      <p>
-        <%= form_with(url: book_reservations_path(book), method: :post, local: true) do |form| %>
-          <div>
-            <%= form.label :pick_up_time, "Reservation Date and Time:" %>
-            <%= form.datetime_local_field :pick_up_time, min: Time.now.strftime('%Y-%m-%dT%H:%M') %>
-          </div>
-          <div>
-            <%= form.submit "Reserve this book" %>
-          </div>
-        <% end %>
-      </p>
-    <% else %>
-      <p>This book is already reserved.</p>
-      <% if book.reserved_by?(current_user) %>
-        <p>Reservation ID: <%= book.reservations.reserved.last.id %></p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <%= form_with(url: books_path, method: :get, local: true, class: "form-inline mb-4") do %>
+        <%= label_tag(:query, "Search by title or author:") %>
+        <%= text_field_tag(:query, params[:query], class: "form-control mr-sm-2") %>
+        <%= submit_tag("Search", class: "btn btn-outline-success my-2 my-sm-0") %>
       <% end %>
-    <% end %>
+    </div>
+  </div>
+  <h1 class="mb-4">Books</h1>
+
+  <% if @books.any? %>
+    <div class="row">
+      <% @books.each do |book| %>
+        <div class="col-md-6 col-lg-4 mb-3">
+          <div class="card h-100" id="<%= dom_id book %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= book.title %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= book.author %></h6>
+
+              <% if book.can_be_reserved? %>
+                <%= form_with(url: book_reservations_path(book), method: :post, local: true) do |form| %>
+                  <div class="form-group">
+                    <%= form.label :pick_up_time, "Reservation Date and Time:" %>
+                    <%= form.datetime_local_field :pick_up_time, min: Time.now.strftime('%Y-%m-%dT%H:%M'), class: "form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.submit "Reserve this book", class: "btn btn-primary" %>
+                  </div>
+                <% end %>
+              <% else %>
+                <p class="card-text">This book is already reserved.</p>
+                <% if book.reserved_by?(current_user) %>
+                  <p class="card-text">Reservation ID: <%= book.reservations.reserved.last.id %></p>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No books found.</p>
   <% end %>
 </div>
-
-<%= link_to "Home", root_path, class: "btn btn-primary" %>

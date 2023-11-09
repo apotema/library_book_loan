@@ -15,7 +15,7 @@ RSpec.describe Book, type: :model do
 
     context 'when there are open reservations' do
       before do
-        create(:reservation, book:, status: :reserved)
+        create(:reservation, book:, state: :reserved)
       end
 
       it 'returns false' do
@@ -25,7 +25,7 @@ RSpec.describe Book, type: :model do
 
     context 'when all reservations are closed' do
       before do
-        create(:reservation, book:, status: :returned)
+        create(:reservation, book:, state: :returned)
       end
 
       it 'returns true' do
@@ -35,8 +35,8 @@ RSpec.describe Book, type: :model do
 
     context 'when there are both open and closed reservations' do
       before do
-        create(:reservation, book:, status: :returned)
-        create(:reservation, book:, status: :reserved)
+        create(:reservation, book:, state: :returned)
+        create(:reservation, book:, state: :reserved)
       end
 
       it 'returns false' do
@@ -48,7 +48,7 @@ RSpec.describe Book, type: :model do
   describe '#reserved_by?' do
     context 'when the book is reserved by the member' do
       before do
-        create(:reservation, book:, member:, status: 'reserved')
+        create(:reservation, book:, member:, state: 'reserved')
       end
 
       it 'returns true' do

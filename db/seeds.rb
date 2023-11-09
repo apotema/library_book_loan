@@ -9,8 +9,13 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 Book.create(title: 'The Great Gatsby', author: 'F. Scott Fitzgerald')
-Book.create(title: 'Bla', author: 'Ble')
-Book.create(title: 'Foo', author: 'Bar')
+Book.create(title: 'The Catcher in the Rye', author: 'J. D. Salinger')
+Book.create(title: 'The Grapes of Wrath', author: 'John Steinbeck')
+Book.create(title: 'To Kill a Mockingbird', author: 'Harper Lee')
+Book.create(title: 'The Color Purple', author: 'Alice Walker')
+Book.create(title: 'Ulysses', author: 'James Joyce')
+Book.create(title: 'Beloved', author: 'Toni Morrison')
+Book.create(title: 'The Lord of the Flies', author: 'William Golding')
 
 user = User.create(email: 'foo@bar.com', password: 'foobar', role: 'clerk')
 user2 = User.create(email: 'user@user.com', password: 'userpassword')

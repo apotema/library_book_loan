@@ -1,26 +1,53 @@
-<h1>Reservation</h1>
+<div class="container mt-5">
+  <h1 class="mb-4">Reservations</h1>
 
-<%= form_with(url: reservations_path, method: :get, local: true) do %>
-  <div>
-    <%= label_tag(:query, "Search by reservation Id:") %>
-    <%= text_field_tag(:query, params[:query]) %>
+  <div class="card mb-4">
+    <div class="card-body">
+      <%= form_with(url: reservations_path, method: :get, local: true, class: "form-inline") do %>
+        <div class="form-group mr-2">
+          <%= label_tag(:query, "Search by reservation ID:", class: "mr-sm-2") %>
+          <%= text_field_tag(:query, params[:query], class: "form-control") %>
+        </div>
+        <%= submit_tag("Search", class: "btn btn-outline-secondary") %>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <%= submit_tag("Search") %>
-  </div>
-<% end %>
 
-<div id="reservation">
-  <% @reservations.each do |reservation| %>
-    <%= render reservation %>
-    <%if reservation.status == "reserved" %>
-      <%= link_to "Lend the book", lend_reservation_path(reservation), data: { 'turbo-method' => :post } %>
-    <% end %>
-    </br>
-    <%if reservation.status == "lent" %>
-      <%= link_to "Return the book", returned_reservation_path(reservation), data: { 'turbo-method' => :post } %>
-    <% end %>
-  <% end %>
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Id</th>
+              <th>Book</th>
+              <th>Time</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @reservations.each do |reservation| %>
+              <tr id="<%= dom_id reservation %>">
+                <td><%= reservation.id %></td>
+                <td><%= reservation.book.title %></td>
+                <td><%= reservation.pick_up_time %></td>
+                <td><%= reservation.member.user.email %></td>
+                <td><%= reservation.state %></td>
+                <td>
+                  <% if reservation.reserved? %>
+                    <%= link_to "Lend the book", lend_reservation_path(reservation), class: "btn btn-primary btn-sm", data: { 'turbo-method' => :post } %>
+                  <% end %>
+                  <% if reservation.lent? %>
+                    <%= link_to "Return the book", returned_reservation_path(reservation), class: "btn btn-warning btn-sm", data: { 'turbo-method' => :post } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-
-<%= link_to "Home", root_path, class: "btn btn-primary" %>

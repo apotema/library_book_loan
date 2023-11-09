@@ -6,6 +6,8 @@ RSpec.describe 'Reservations', type: :request do
 
   describe 'POST /returned' do
     context 'when the user is authenticated' do
+      let(:reservation) { create(:reservation, state: :lent) }
+
       before do
         sign_in user
         post returned_reservation_path(reservation)
@@ -13,11 +15,14 @@ RSpec.describe 'Reservations', type: :request do
 
       it 'updates the reservation status to returned' do
         reservation.reload
-        expect(reservation.status).to eq('returned') # Assuming status is a string field
+        expect(reservation.state).to eq('returned')
       end
 
       it 'redirects to the reservations path with a success notice' do
         expect(response).to redirect_to(reservations_path)
+      end
+
+      it 'has the correct flash message' do
         expect(flash[:notice]).to match(/has been returned successfully/)
       end
     end
@@ -29,7 +34,7 @@ RSpec.describe 'Reservations', type: :request do
 
       it 'does not update the reservation status' do
         reservation.reload
-        expect(reservation.status).not_to eq('returned') # Assuming status is a string field
+        expect(reservation.state).not_to eq('returned')
       end
 
       it 'redirects to the sign-in page' do
@@ -47,7 +52,7 @@ RSpec.describe 'Reservations', type: :request do
 
       it 'updates the reservation status to lent' do
         reservation.reload
-        expect(reservation.status).to eq('lent')
+        expect(reservation.state).to eq('lent')
       end
 
       it 'redirects to the reservations path with a success notice' do
@@ -63,7 +68,7 @@ RSpec.describe 'Reservations', type: :request do
 
       it 'does not update the reservation status' do
         reservation.reload
-        expect(reservation.status).not_to eq('lent')
+        expect(reservation.state).not_to eq('lent')
       end
 
       it 'redirects to the sign-in page' do
