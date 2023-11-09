@@ -25,7 +25,7 @@ class ReservationsController < ApplicationController
   end
 
   def returned
-    reservation.returned!
+    reservation.return_book!
     redirect_to reservations_path, notice: 'The book has been returned successfully.'
   end
 
