@@ -41,7 +41,6 @@ RSpec.describe 'Books', type: :feature do
 
     context 'when the book cannot be reserved' do
       before do
-        # This will simulate the scenario where the book cannot be reserved, e.g. it is already reserved.
         allow_any_instance_of(Book).to receive(:can_be_reserved?).and_return(false)
       end
 
