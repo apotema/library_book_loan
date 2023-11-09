@@ -5,6 +5,8 @@ class Reservation < ApplicationRecord
   scope :reserved, -> { where(state: :reserved) }
   scope :open, -> { where(state: %i[reserved lent]) }
 
+  validate :book_is_available, on: :create
+
   state_machine initial: :reserved do
     event :lend do
       transition reserved: :lent
@@ -14,5 +16,13 @@ class Reservation < ApplicationRecord
     event :return_book do
       transition lent: :returned
     end
+  end
+
+  private
+
+  def book_is_available
+    return unless Reservation.open.exists?(book_id:)
+
+    errors.add(:book, 'is already reserved.')
   end
 end

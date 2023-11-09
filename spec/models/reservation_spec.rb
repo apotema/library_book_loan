@@ -48,4 +48,31 @@ RSpec.describe Reservation, type: :model do
       expect(reservation.state).to eq('returned')
     end
   end
+
+  describe '.book_is_available' do
+    let(:book) { create(:book) }
+    let(:member) { create(:member) }
+    let(:reservation) { build(:reservation, book:, member:) }
+
+    context 'when the book is not available' do
+      before do
+        create(:reservation, book:, state: 'reserved')
+      end
+
+      it 'is not valid' do
+        expect(reservation).not_to be_valid
+      end
+
+      it 'return the correct error message' do
+        reservation.valid?
+        expect(reservation.errors[:book]).to include('is already reserved.')
+      end
+    end
+
+    context 'when the book is available' do
+      it 'is valid' do
+        expect(reservation).to be_valid
+      end
+    end
+  end
 end
