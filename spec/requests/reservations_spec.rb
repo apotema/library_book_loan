@@ -6,7 +6,6 @@ RSpec.describe 'Reservations', type: :request do
 
   describe 'POST /returned' do
     context 'when the user is authenticated' do
-
       let(:reservation) { create(:reservation, state: :lent) }
 
       before do
@@ -21,6 +20,9 @@ RSpec.describe 'Reservations', type: :request do
 
       it 'redirects to the reservations path with a success notice' do
         expect(response).to redirect_to(reservations_path)
+      end
+
+      it 'has the correct flash message' do
         expect(flash[:notice]).to match(/has been returned successfully/)
       end
     end
